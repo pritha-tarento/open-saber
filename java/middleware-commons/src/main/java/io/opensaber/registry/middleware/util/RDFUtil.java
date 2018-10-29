@@ -131,7 +131,9 @@ public class RDFUtil {
     
     public static List<String> getTypeForSubject(Model rdfModel, Resource root){
     	List<String> typeIRIs = new ArrayList<String>();
-    	NodeIterator nodeIter = rdfModel.listObjectsOfProperty(root, RDF.type);
+    	logger.debug("what is this root type + {} {}", RDF.type.getNameSpace() + RDF.type.getLocalName());
+
+    	NodeIterator nodeIter = rdfModel.listObjectsOfProperty(root, ResourceFactory.createProperty("http://dctx/", "type"));
 		while(nodeIter.hasNext()){
 			RDFNode rdfNode = nodeIter.next();
 			typeIRIs.add(rdfNode.toString());

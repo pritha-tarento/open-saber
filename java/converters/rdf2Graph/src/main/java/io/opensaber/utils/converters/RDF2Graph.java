@@ -73,8 +73,8 @@ public final class RDF2Graph
 			}
 		} else if (objectValue instanceof IRI) {
 			IRI objectIRI = (IRI)objectValue;
-			Vertex o = getExistingVertexOrAdd(objectIRI.toString(), graph);
-            subjectVertex.addEdge(property.toString(), o);
+			Vertex o = getExistingVertexOrAdd(objectIRI.getLocalName(), graph);
+            subjectVertex.addEdge(property.getLocalName(), o);
 		} else if (objectValue instanceof BNode) {
 			BNode objectBNode = (BNode)objectValue;
             Vertex o = getExistingVertexOrAdd(objectBNode.toString(), graph);
@@ -181,7 +181,7 @@ public final class RDF2Graph
 				node = vf.createIRI(s.label());
 				logger.debug("ADDING NODE - IRI");
 			}
-			builder.add(edge.label(), node);
+			builder.add(((IRI) node).getNamespace() + edge.label(), node);
 			vStack.push(s);
 		}
 		Iterator<Vertex> vIterator = vStack.iterator();

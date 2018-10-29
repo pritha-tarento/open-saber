@@ -802,17 +802,6 @@ public class RegistryDaoImplTest extends RegistryTestBase {
 				ResourceFactory.createResource(nodeLabel), labelForUpdate);
 	}
 
-	private String getJsonldFromGraph(Graph entity, String rootLabel) {
-		org.eclipse.rdf4j.model.Model model = RDF2Graph.convertGraph2RDFModel(entity, rootLabel);
-		String jsonldOutput = "";
-		try {
-			jsonldOutput = RDFUtil.frameEntity(model);
-		} catch (IOException ex) {
-			logger.debug("IO Exception = " + ex);
-		}
-		return jsonldOutput;
-	}
-
 	public Vertex getVertexForSubject(String subjectValue, String property, String objectValue){
 		Vertex vertex = null;
 		graph = TinkerGraph.open();
@@ -825,24 +814,6 @@ public class RegistryDaoImplTest extends RegistryTestBase {
 					T.label,subjectValue);
 		}
 		vertex.property(property, objectValue);
-		return vertex;
-	}
-	
-	public Vertex getVertexWithMultipleProperties(String subjectValue, Map<String, String> map){
-		Vertex vertex = null;
-		graph = TinkerGraph.open();
-		GraphTraversalSource t = graph.traversal();
-		GraphTraversal<Vertex, Vertex> hasLabel = t.V().hasLabel(subjectValue);
-		if(hasLabel.hasNext()){
-			vertex = hasLabel.next();
-		} else {
-			vertex = graph.addVertex(
-					T.label,subjectValue);
-		}
-		for (Map.Entry<String, String> entry : map.entrySet())
-		{
-			vertex.property(entry.getKey(), entry.getValue());
-		}
 		return vertex;
 	}
 

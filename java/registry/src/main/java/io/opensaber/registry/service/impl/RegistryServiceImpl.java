@@ -127,6 +127,7 @@ public class RegistryServiceImpl implements RegistryService {
 		return registryDao.getEntityList();
 	}
 
+
 	@Override
 	public String addEntity(Model rdfModel, String dataObject, String subject, String property)
 			throws DuplicateRecordException, EntityCreationException, EncryptionException, AuditFailedException,

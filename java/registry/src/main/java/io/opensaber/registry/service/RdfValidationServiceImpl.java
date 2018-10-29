@@ -174,7 +174,7 @@ public class RdfValidationServiceImpl implements ValidationService {
 	}
 	
 	private Model getValidationConfigModel(){
-		return RDFUtil.getRdfModelBasedOnFormat(schemaForUpdate.serialize(JSON_LD_FORMAT).right().get(), JSON_LD_FORMAT);
+		return RDFUtil.getRdfModelBasedOnFormat(schemaForCreate.serialize(JSON_LD_FORMAT).right().get(), JSON_LD_FORMAT);
 	}
 
 }
