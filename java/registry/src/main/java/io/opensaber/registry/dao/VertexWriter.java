@@ -5,8 +5,13 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import io.opensaber.registry.middleware.util.Constants;
 import io.opensaber.registry.sink.DatabaseProvider;
 import io.opensaber.registry.util.ArrayHelper;
+import io.opensaber.registry.util.AuditFields;
 import io.opensaber.registry.util.RefLabelHelper;
 import io.opensaber.registry.util.TypePropertyHelper;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import org.apache.tinkerpop.gremlin.process.traversal.P;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 import org.apache.tinkerpop.gremlin.structure.Edge;
@@ -14,11 +19,6 @@ import org.apache.tinkerpop.gremlin.structure.Graph;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Helps in writing a vertex, edge into the database
@@ -77,6 +77,7 @@ public class VertexWriter {
         vertex.property(TypePropertyHelper.getTypeName(), label);
         vertex.property(uuidPropertyName, databaseProvider.generateId(vertex));
 
+        AuditFields.createdOn.ensureTimeStamp(vertex);
         return vertex;
     }
     

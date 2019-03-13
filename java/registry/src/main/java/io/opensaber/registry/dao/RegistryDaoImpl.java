@@ -5,14 +5,14 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.opensaber.pojos.OpenSaberInstrumentation;
 import io.opensaber.registry.middleware.util.Constants;
 import io.opensaber.registry.sink.DatabaseProvider;
+import io.opensaber.registry.util.AuditFields;
 import io.opensaber.registry.util.DefinitionsManager;
 import io.opensaber.registry.util.ReadConfigurator;
+import java.util.List;
 import org.apache.tinkerpop.gremlin.structure.Graph;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
 
 public class RegistryDaoImpl implements IRegistryDao {
     public String uuidPropertyName;
@@ -116,6 +116,7 @@ public class RegistryDaoImpl implements IRegistryDao {
             if (!fieldKey.equals(uuidPropertyName) &&
                     fieldValue.isValueNode() && !fieldKey.equals(Constants.TYPE_STR_JSON_LD)) {
                 vertex.property(fieldKey, ValueType.getValue(fieldValue));
+                AuditFields.updatedOn.ensureTimeStamp(vertex);
             } else {
                 logger.debug("Not updating non-value object types here");
             }

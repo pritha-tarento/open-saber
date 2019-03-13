@@ -2,6 +2,7 @@ package io.opensaber.registry.service.impl;
 
 import io.opensaber.registry.dao.IRegistryDao;
 import io.opensaber.registry.service.RegistryAuditService;
+import org.apache.tinkerpop.gremlin.structure.Vertex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,5 +18,10 @@ public class RegistryAuditServiceImpl implements RegistryAuditService {
 
 	@Value("${audit.frame.file}")
 	private String auditFrameFile;
+
+    @Override
+    public void ensureTimeStamp(Vertex vertex) {
+        // No implementation.       
+    }
 
 }
